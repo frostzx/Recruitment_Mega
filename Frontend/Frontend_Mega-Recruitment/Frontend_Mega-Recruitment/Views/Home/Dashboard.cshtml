@@ -1,0 +1,238 @@
+﻿@{
+    Layout = null;
+}
+
+@model User
+
+<style>
+    /* Global Styles */
+    body {
+        background-color: #f0f4f8;
+        font-family: Arial, sans-serif;
+    }
+
+    h2 {
+        color: #0056b3;
+        text-align: center;
+        font-size: 24px;
+    }
+
+    p {
+        color: #333;
+        font-size: 16px;
+        text-align: center;
+    }
+
+    .form-container {
+        margin-top: 30px;
+        max-width: 600px;
+        margin: 0 auto;
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-label {
+        font-weight: bold;
+    }
+
+    .mb-3 {
+        margin-bottom: 20px;
+    }
+
+    /* Button Styling */
+    .btn-success {
+        background-color: #28a745;
+        border-color: #28a745;
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+        border-color: #007bff;
+    }
+
+    .btn-secondary {
+        background-color: #6c757d;
+        border-color: #6c757d;
+    }
+
+    .btn {
+        padding: 10px 20px;
+        font-size: 16px;
+    }
+
+    /* Styling for Input Fields */
+    .form-control {
+        width: 100%;
+        padding: 10px;
+        font-size: 16px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        background-color: #fff;
+        line-height: 1.5;
+        box-sizing: border-box;
+    }
+
+    /* Styling for the Select Dropdown */
+    .select-wrapper {
+        width: 100%;
+        display: block;
+        position: relative;
+    }
+
+    select.form-control {
+        width: 100%;
+        padding: 10px;
+        font-size: 16px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        background-color: #fff;
+        line-height: 1.5;
+    }
+
+    /* Margin and spacing adjustments for the fields */
+    .mb-3 {
+        margin-bottom: 20px;
+    }
+
+        .mb-3 label {
+            font-size: 16px;
+            margin-bottom: 8px;
+        }
+
+    /* Button style for the form submission */
+    button.btn-primary {
+        background-color: #007bff;
+        border-color: #007bff;
+        padding: 10px 20px;
+        font-size: 16px;
+        border-radius: 5px;
+        margin-top: 20px;
+        width: 100%;
+        cursor: pointer;
+    }
+
+        button.btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #0056b3;
+        }
+</style>
+
+<h2>Welcome, @Model.Username!</h2>
+<p>Your user ID is @Model.UserId</p>
+<p>Your account is @(Model.IsActive ? "Active" : "Inactive")</p>
+
+<div class="form-container">
+    <form id="addDataForm">
+        <div class="mb-3">
+            <label for="AgreementNumber" class="form-label">Agreement Number</label>
+            <input type="text" class="form-control" id="AgreementNumber" name="AgreementNumber" required />
+        </div>
+        <div class="mb-3">
+            <label for="BranchId" class="form-label">Branch Id</label>
+            <input type="text" class="form-control" id="BranchId" name="BranchId" required />
+        </div>
+        <div class="mb-3">
+            <label for="NoBPKB" class="form-label">No. BPKB</label>
+            <input type="text" class="form-control" id="NoBPKB" name="NoBPKB" required />
+        </div>
+        <div class="mb-3">
+            <label for="TanggalBPKBIn" class="form-label">Tanggal BPKB In</label>
+            <input type="date" class="form-control" id="TanggalBPKBIn" name="TanggalBPKBIn" required />
+        </div>
+        <div class="mb-3">
+            <label for="TanggalBPKB" class="form-label">Tanggal BPKB</label>
+            <input type="date" class="form-control" id="TanggalBPKB" name="TanggalBPKB" required />
+        </div>
+        <div class="mb-3">
+            <label for="NoFaktur" class="form-label">No. Faktur</label>
+            <input type="text" class="form-control" id="NoFaktur" name="NoFaktur" required />
+        </div>
+        <div class="mb-3">
+            <label for="TanggalFaktur" class="form-label">Tanggal Faktur</label>
+            <input type="date" class="form-control" id="TanggalFaktur" name="TanggalFaktur" required />
+        </div>
+        <div class="mb-3">
+            <label for="NoPolisi" class="form-label">No. Polisi</label>
+            <input type="text" class="form-control" id="NoPolisi" name="NoPolisi" required />
+        </div>
+        <div class="mb-3">
+            <label for="LokasiPenyimpanan" class="form-label">Lokasi Penyimpanan</label>
+            <select class="form-control" id="LokasiPenyimpanan" name="LokasiPenyimpanan" required>
+                <option value="1">Location 1</option>
+                <option value="2">Location 2</option>
+                <option value="3">Location 3</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <button type="submit" class="btn btn-primary">Save</button>
+        </div>
+    </form>
+    <div id="responseMessage"></div>
+</div>
+
+<script>
+    document.getElementById('addDataForm').addEventListener('submit', function (event) {
+        event.preventDefault();
+
+        const formData = new FormData(event.target);
+        console.log(formData);
+        const data = {
+            AgreementNumber: formData.get('AgreementNumber'),
+            BpkbNo: formData.get('NoBPKB'),
+            BranchId: formData.get('BranchId'),
+            BpkbDate: formData.get('TanggalBPKB'),
+            FakturNo: formData.get('NoFaktur'),
+            FakturDate: formData.get('TanggalFaktur'),
+            LocationId: formData.get('LokasiPenyimpanan'),
+            PoliceNo: formData.get('NoPolisi'),
+            BpkbDateIn: formData.get('TanggalBPKBIn'),
+            CreatedBy: "@Model.Username",
+        };
+        console.log(data);
+
+        fetch('https://localhost:7156/api/User/insert', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data),
+        })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('responseMessage').innerHTML = `<div class="alert">Data Saved successfully!</div>`;
+                if (data.message == "Data updated successfully" || data.message == "Data inserted successfully") document.getElementById('addDataForm').reset();
+            })
+            .catch(error => {
+                document.getElementById('responseMessage').innerHTML = `<div class="alert" style="background-color: #dc3545;">Failed to add data</div>`;
+            });
+    });
+
+    function fetchLocations() {
+        fetch('https://localhost:7156/api/User/getlocation', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({}) // Kirim payload jika diperlukan
+        })
+            .then(response => response.json())
+            .then(data => {
+                const locationSelect = document.getElementById('LokasiPenyimpanan');
+                locationSelect.innerHTML = '';
+                data.forEach(location => {
+                    const option = document.createElement('option');
+                    option.value = location.locationId;
+                    option.textContent = location.locationName;
+                    locationSelect.appendChild(option);
+                });
+            })
+            .catch(error => {
+                console.error('Error fetching locations:', error);
+            });
+    }
+
+    // Panggil fungsi fetchLocations saat halaman dimuat
+    document.addEventListener('DOMContentLoaded', fetchLocations);
+</script>

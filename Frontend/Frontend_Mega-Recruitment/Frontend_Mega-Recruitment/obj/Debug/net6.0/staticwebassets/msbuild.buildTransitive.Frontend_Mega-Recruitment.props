@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\buildMultiTargeting\Frontend_Mega-Recruitment.props" />
+</Project>
