@@ -24,9 +24,19 @@
     }
 
     .form-container {
-        margin-top: 30px;
         max-width: 600px;
         margin: 0 auto;
+        margin-top: 30px;
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-container-table {
+        max-width: 1000px;
+        margin: 0 auto;
+        margin-top: 30px;
         background-color: #fff;
         padding: 20px;
         border-radius: 8px;
@@ -117,11 +127,57 @@
             background-color: #0056b3;
             border-color: #0056b3;
         }
+
+    table {
+    border-collapse: collapse; /* Menggabungkan garis tepi untuk tampilan bersih */
+    width: 100%; /* Agar tabel menyesuaikan lebar kontainer */
+}
+
+th, td {
+    border: 1px solid #ccc; /* Garis tepi di setiap kolom dan baris */
+    padding: 10px; /* Ruang dalam untuk setiap sel */
+    text-align: left; /* Teks rata kiri */
+}
+
+th {
+    background-color: #f8f9fa; /* Warna latar untuk header tabel */
+    font-weight: bold; /* Membuat teks header tebal */
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2; /* Alternatif warna untuk setiap baris genap */
+}
+
+tr:hover {
+    background-color: #e9ecef; /* Warna latar saat baris di-hover */
+}
 </style>
 
 <h2>Welcome, @Model.Username!</h2>
 <p>Your user ID is @Model.UserId</p>
 <p>Your account is @(Model.IsActive ? "Active" : "Inactive")</p>
+<div class="form-container-table">
+    <h2>Data List</h2>
+    <table class="table table-striped" id="dataTable">
+        <thead>
+            <tr>
+                <th>Agreement Number</th>
+                <th>BPKB No</th>
+                <th>Branch ID</th>
+                <th>BPKB Date</th>
+                <th>Faktur No</th>
+                <th>Faktur Date</th>
+                <th>Location Name</th>
+                <th>Police No</th>
+                <th>BPKB Date In</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Data akan diisi melalui JavaScript -->
+        </tbody>
+    </table>
+</div>
 
 <div class="form-container">
     <form id="addDataForm">
@@ -215,7 +271,7 @@
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({}) // Kirim payload jika diperlukan
+            body: JSON.stringify({})
         })
             .then(response => response.json())
             .then(data => {
@@ -231,8 +287,69 @@
             .catch(error => {
                 console.error('Error fetching locations:', error);
             });
+        getData();
     }
 
-    // Panggil fungsi fetchLocations saat halaman dimuat
+    function getData() {
+        fetch('https://localhost:7156/api/User/getdata', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({})
+        })
+            .then(response => response.json())
+            .then(data => {
+                const tableBody = document.querySelector('#dataTable tbody');
+                tableBody.innerHTML = '';
+                data.forEach(item => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                                <td>${item.agreementNumber}</td>
+                                <td>${item.bpkbNo}</td>
+                                <td>${item.branchId}</td>
+                                <td>${item.bpkbDate ? item.bpkbDate.substring(0, 10) : ''}</td>
+                                <td>${item.fakturNo}</td>
+                                <td>${item.fakturDate ? item.bpkbDate.substring(0, 10) : ''}</td>
+                                <td>${item.locationName}</td>
+                                <td>${item.policeNo}</td>
+                                <td>${item.bpkbDateIn ? item.bpkbDate.substring(0, 10) : ''}</td>
+                            <td>
+                                    <button class="btn btn-danger btn-sm" onclick="deleteData('${item.agreementNumber}')">Delete</button>
+                            </td>
+                        `;
+                    tableBody.appendChild(row);
+                });
+            })
+            .catch(error => {
+                console.error('Error fetching data:', error);
+            });
+    }
+
+    function deleteData(agreementNumber) {
+        if (!confirm(`Are you sure you want to delete Agreement Number: ${agreementNumber}?`)) return;
+
+        fetch('https://localhost:7156/api/User/deletedata', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ AgreementNumber: agreementNumber })
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.message === "Data deleted successfully") {
+                    alert('Data deleted successfully!');
+                    getData();
+                } else {
+                    alert('Failed to delete data!');
+                }
+            })
+            .catch(error => {
+                console.error('Error deleting data:', error);
+                alert('Error deleting data!');
+            });
+    }
+
     document.addEventListener('DOMContentLoaded', fetchLocations);
 </script>

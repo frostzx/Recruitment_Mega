@@ -51,7 +51,6 @@ namespace RecruitmentMega.Controllers
                 }
                 else
                 {
-                    // Insert new agreement
                     bool insertResult = await _userService.InsertAgreementDataAsync(request);
                     if (insertResult)
                     {
@@ -79,6 +78,31 @@ namespace RecruitmentMega.Controllers
             }
             return Ok(data);
         }
+
+        [HttpPost("getdata")]
+        public async Task<IActionResult> GetData()
+        {
+            var data = await _userService.GetTrBpkbAsync();
+            if (data == null || data.Count == 0)
+            {
+                return NotFound("No data found");
+            }
+            return Ok(data);
+        }
+
+        [HttpPost("deletedata")]
+        public async Task<IActionResult> DeleteData([FromBody] DeleteRequest request)
+        {
+            var isDeleted = await _userService.DeleteData(request.AgreementNumber);
+
+            if (!isDeleted)
+            {
+                return NotFound("No data found or failed to delete.");
+            }
+
+            return Ok(new { message = "Data deleted successfully" });
+        }
+
     }
 
     public class LoginRequest
@@ -99,5 +123,9 @@ namespace RecruitmentMega.Controllers
         public string PoliceNo { get; set; }
         public DateTime BpkbDateIn { get; set; }
         public string CreatedBy { get; set; }
+    }
+    public class DeleteRequest
+    {
+        public string AgreementNumber { get; set; }
     }
 }

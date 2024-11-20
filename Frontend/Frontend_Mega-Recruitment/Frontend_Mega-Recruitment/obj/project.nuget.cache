@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "KHagGylVZLuOeJ3Khn4pvLZ/GBuw08fN/c4m5TK35NVa3jpO1f6n9Z2IMyDHUgJ1/rKsxP88ebHBGOfKySsp8g==",
+  "dgSpecHash": "nL53yw7nEdPQ/IOEjaEimuXPFmPIqeN+uOHfMSYChHiqeNlDJF2+JGdj/rXdxu99/rTQmx/mEhwFoA+XncZrxQ==",
   "success": true,
-  "projectFilePath": "D:\\my project\\MegaRecruitment\\Frontend_Mega-Recruitment\\Frontend_Mega-Recruitment\\Frontend_Mega-Recruitment.csproj",
+  "projectFilePath": "D:\\my project\\MegaRecruitment\\Recruitment_Mega\\Frontend\\Frontend_Mega-Recruitment\\Frontend_Mega-Recruitment\\Frontend_Mega-Recruitment.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\user\\.nuget\\packages\\microsoft.aspnetcore.cryptography.internal\\2.2.0\\microsoft.aspnetcore.cryptography.internal.2.2.0.nupkg.sha512",
     "C:\\Users\\user\\.nuget\\packages\\microsoft.aspnetcore.dataprotection\\2.2.0\\microsoft.aspnetcore.dataprotection.2.2.0.nupkg.sha512",

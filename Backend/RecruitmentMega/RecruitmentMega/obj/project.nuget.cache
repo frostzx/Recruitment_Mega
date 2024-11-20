@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "mZeS046gpn/vX1XtwWC2v4IKMVtVC+2GYdM90SThvlvGwhzOts+Sks716O5TYoLxl1IHiLrt0jB4U3vHG/IkxQ==",
+  "dgSpecHash": "beJ60rQlb0DOsnmvEIyplCs9osuW+E0Meb3whgnLRSTmgU+qUKjGIDov+m94PUQ3qU3sTajE45eLdLxw+ibrZA==",
   "success": true,
-  "projectFilePath": "D:\\my project\\MegaRecruitment\\RecruitmentMega\\RecruitmentMega\\RecruitmentMega.csproj",
+  "projectFilePath": "D:\\my project\\MegaRecruitment\\Recruitment_Mega\\Backend\\RecruitmentMega\\RecruitmentMega\\RecruitmentMega.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\user\\.nuget\\packages\\azure.core\\1.6.0\\azure.core.1.6.0.nupkg.sha512",
     "C:\\Users\\user\\.nuget\\packages\\azure.identity\\1.3.0\\azure.identity.1.3.0.nupkg.sha512",

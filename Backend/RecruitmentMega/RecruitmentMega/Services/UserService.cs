@@ -161,6 +161,73 @@ namespace RecruitmentMega.Services
 
             return locations;
         }
+
+        public async Task<List<GetAll>> GetTrBpkbAsync()
+        {
+            var datas = new List<GetAll>();
+
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                await connection.OpenAsync();
+                var command = new SqlCommand("SELECT a.*, b.location_name FROM tr_bpkb a JOIN ms_storage_location b ON a.location_id = b.location_id", connection);
+
+                var reader = await command.ExecuteReaderAsync();
+                while (await reader.ReadAsync())
+                {
+                    var datatrans = new GetAll
+                    {
+                        AgreementNumber = reader.GetString("agreement_number"),
+                        BpkbNo = reader.GetString("bpkb_no"),
+                        BranchId = reader.GetString("branch_id"),
+                        BpkbDate = reader.GetDateTime("bpkb_date"),
+                        FakturNo = reader.GetString("faktur_no"),
+                        FakturDate = reader.GetDateTime("faktur_date"),
+                        LocationId = reader.GetString("location_id"),
+                        PoliceNo = reader.GetString("police_no"),
+                        BpkbDateIn = reader.GetDateTime("bpkb_date_in"),
+                        LocationName = reader.GetString("location_name"),
+                    };
+                    datas.Add(datatrans);
+                }
+            }
+
+            return datas;
+        }
+
+        public async Task<bool> DeleteData(string agreementNumber)
+        {
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                try
+                {
+                    await connection.OpenAsync();
+
+                    string query = "DELETE FROM tr_bpkb WHERE agreement_number = @AgreementNumber";
+
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        command.Parameters.AddWithValue("@AgreementNumber", agreementNumber);
+
+                        int rowsAffected = await command.ExecuteNonQueryAsync();
+
+                        return rowsAffected > 0;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error: {ex.Message}");
+                    throw;
+                }
+                finally
+                {
+                    if (connection.State == System.Data.ConnectionState.Open)
+                    {
+                        await connection.CloseAsync();
+                    }
+                }
+            }
+        }
+
         public class TrBpkb
         {
             public string AgreementNumber { get; set; }
@@ -188,6 +255,19 @@ namespace RecruitmentMega.Services
             public string Username { get; set; }
             public bool isActive { get; set; }
             public string Status { get; set; }
+        }
+        public class GetAll
+        {
+            public string AgreementNumber { get; set; }
+            public string BpkbNo { get; set; }
+            public string BranchId { get; set; }
+            public DateTime BpkbDate { get; set; }
+            public string FakturNo { get; set; }
+            public DateTime FakturDate { get; set; }
+            public string LocationId { get; set; }
+            public string PoliceNo { get; set; }
+            public DateTime BpkbDateIn { get; set; }
+            public string LocationName { get; set; }
         }
     }
 }

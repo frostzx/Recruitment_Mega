@@ -3115,11 +3115,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\my project\\MegaRecruitment\\RecruitmentMega\\RecruitmentMega\\RecruitmentMega.csproj",
+      "projectUniqueName": "D:\\my project\\MegaRecruitment\\Recruitment_Mega\\Backend\\RecruitmentMega\\RecruitmentMega\\RecruitmentMega.csproj",
       "projectName": "RecruitmentMega",
-      "projectPath": "D:\\my project\\MegaRecruitment\\RecruitmentMega\\RecruitmentMega\\RecruitmentMega.csproj",
+      "projectPath": "D:\\my project\\MegaRecruitment\\Recruitment_Mega\\Backend\\RecruitmentMega\\RecruitmentMega\\RecruitmentMega.csproj",
       "packagesPath": "C:\\Users\\user\\.nuget\\packages\\",
-      "outputPath": "D:\\my project\\MegaRecruitment\\RecruitmentMega\\RecruitmentMega\\obj\\",
+      "outputPath": "D:\\my project\\MegaRecruitment\\Recruitment_Mega\\Backend\\RecruitmentMega\\RecruitmentMega\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\user\\AppData\\Roaming\\NuGet\\NuGet.Config",
